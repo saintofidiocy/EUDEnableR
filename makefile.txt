@@ -1,0 +1,43 @@
+# EUDEnable: Remastered
+
+RM      = rm -f
+CPP     = c++.exe
+GCC     = gcc.exe
+DLLWRAP = dllwrap.exe
+WINDRES = windres.exe
+INCLUDE = 
+VORBIS  = -lvorbisfile -lvorbis -logg
+FLAGS   = $(INCLUDE) -masm=intel -O3
+
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before EUDEnableR.bwl EUDEnableR.qdp all-after
+
+
+clean: clean-custom
+	${RM} eudr.o ogg2wav.o bwl.o EUDEnableR.asm EUDEnableRWav.asm EUDEnableR.bwl EUDEnableR.qdp version.res
+
+
+eudr.o: eudr.cpp
+# Uncomment to make asm file for debugging purposes
+#	$(CPP) eudr.cpp -o EUDEnableR.asm $(FLAGS) -S
+	$(CPP) -c eudr.cpp -o eudr.o $(FLAGS)
+
+ogg2wav.o: ogg2wav.c
+#	$(GCC) ogg2wav.c -o EUDEnableRWav.asm $(FLAGS) -S
+	$(GCC) -c ogg2wav.c -o ogg2wav.o $(FLAGS)
+
+bwl.o: bwl.c
+	$(GCC) -c bwl.c -o bwl.o $(FLAGS)
+
+EUDEnableR.bwl: bwl.o eudr.o ogg2wav.o
+	$(WINDRES) -i version.rc --input-format=rc -o version.res -D FILE_EXT=".bwl" -O coff
+	$(DLLWRAP) bwl.o eudr.o ogg2wav.o version.res -o EUDEnableR.bwl $(VORBIS) -s
+
+EUDEnableR.qdp: eudr.o ogg2wav.o
+	$(WINDRES) -i version.rc --input-format=rc -o version.res -D FILE_EXT=".qdp" -O coff
+	$(CPP) qdp.cpp eudr.o ogg2wav.o version.res -shared -o EUDEnableR.qdp $(FLAGS) -Wl,qdp.def -lversion $(VORBIS) -s
+
+all-after:
+	${RM} eudr.o bwl.o

@@ -1,0 +1,44 @@
+#include "version.h"
+
+// Make String Constants
+#define MAKESTR(x) #x
+#define STR(x) MAKESTR(x)
+#define VSTR_MAJOR STR(VER_MAJOR)
+#define VSTR_MINOR STR(VER_MINOR)
+#define VSTR_BUILD STR(VER_BUILD)
+#define VSTR_YEAR  STR(VER_YEAR)
+
+#ifndef FILE_EXT
+#define FILE_EXT_STR ""
+#else
+#define FILE_EXT_STR STR(FILE_EXT)
+#endif
+
+
+1     VERSIONINFO
+FILEVERSION     VER_MAJOR,VER_MINOR,VER_BUILD,1
+PRODUCTVERSION  VER_MAJOR,VER_MINOR,VER_BUILD,1
+FILEFLAGSMASK   0x3F
+FILEFLAGS       0x0
+FILEOS          0x40004
+FILETYPE        0x1
+FILESUBTYPE     0x0
+{
+ BLOCK "StringFileInfo" {
+  BLOCK "040904B0" {
+   VALUE "CompanyName", "O)FaRTy1billion"
+   VALUE "FileVersion", VSTR_MAJOR "." VSTR_MINOR "." VSTR_BUILD ".0"
+   VALUE "FileDescription", PLUGIN_NAME " (sc 1.16.1)"
+   VALUE "InternalName", PLUGIN_NAME
+   VALUE "LegalCopyright", "\xA9 2009-" VSTR_YEAR
+//   VALUE "LegalTrademarks", ""
+   VALUE "OriginalFilename", "EUDEnableR" FILE_EXT_STR
+   VALUE "ProductName", PLUGIN_NAME
+   VALUE "ProductVersion", "v" VSTR_MAJOR "." VSTR_MINOR
+   VALUE "Comments", "For StarCraft 1.16.1\r\n" PLUGIN_REPO
+  }
+ }
+ BLOCK "VarFileInfo" {
+  VALUE "Translation", 0x0409, 0x04B0
+ }
+}

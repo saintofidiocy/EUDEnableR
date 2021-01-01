@@ -1,0 +1,3 @@
+LIBRARY qdp.dll
+EXPORTS
+    GetMPQDraftPlugin = _Z17GetMPQDraftPluginPP15IMPQDraftPlugin@4 @100
