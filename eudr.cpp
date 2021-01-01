@@ -809,7 +809,7 @@ __fastcall u32 getStr(){
 // Based on 0x0049B130, but now also applies CRGB colors if the section is present
 void setPlayerColors(u32 count, u8* buffer){
   u8 tmini[12];  // [ebp-c]
-  u8 tunit[96]; // [ebp-6c] -- neat note: the first 8 entries of the unit color table are copied to the stack, which explains why colors 12 to 15 don't work despite being in tunit.pcx and anything >11 gives random garbage
+  u8 tunit[96]; // [ebp-6c] -- neat note: the first 12 entries of the unit color table are copied to the stack, which explains why colors 12 to 15 don't work despite being in tunit.pcx and anything >11 gives random garbage
   u8 useCOLR;
   
   memcpy(tunit, unitColTable, 96);
