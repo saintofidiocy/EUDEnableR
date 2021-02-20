@@ -14,6 +14,7 @@ Supports SC:R Map Versions, including:
 - EUDEnableR.qdp - MPQDraft plugin
 
 ### VERSION HISTORY:
+- 3.0.2 - Changed STR buffer to be at the fixed SC:Remastered address for better EUD support.
 - 3.0.1 - Reworked the code and added support for SC:Remastered map versions and EUD masking.
 - 2.2.0 - Released MPQDraft and ChaosLauncher builds.
 - 2.1.2 - Fixed action ASM.
