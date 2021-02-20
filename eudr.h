@@ -98,7 +98,7 @@ typedef   signed int   s32;
 typedef struct {
   u32 end;
   u8* data;
-  u32 unk;
+  u8  name[4];
   u32 size;
 } chk_call_data;
 

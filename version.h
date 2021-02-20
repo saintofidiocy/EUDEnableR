@@ -1,6 +1,6 @@
 #define VER_MAJOR 3
 #define VER_MINOR 0
-#define VER_BUILD 1
+#define VER_BUILD 2
 #define VER_YEAR  2021
 #define PLUGIN_NAME      "EUDEnable: Remastered"
 #define PLUGIN_QDP_ID    0x52445545

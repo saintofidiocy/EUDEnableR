@@ -13,6 +13,10 @@ __stdcall u32 CHK_COLR_opt(chk_call_data* thing, u32 size, u32 idk);
 __stdcall u32 CHK_STRx(chk_call_data* thing, u32 size, u32 idk);
 
 
+// SC:R keeps STR data at a fixed address for EUDs
+#define EUD_STR_PTR        0x191943C8
+#define EUD_STR_MAX_SIZE   64<<20 // 64 MB reserved
+
 
 /* ---- Map Version Tables ---- */
 
@@ -31,7 +35,7 @@ chk_sect general[] = {
 {SECT_ERA , 0x004CB3A0, 1},
 {SECT_OWNR, 0x004CB420, 1},
 {SECT_SIDE, 0x004CB490, 1},
-{SECT_STR , 0x004CC650, 0},
+{SECT_STR , (u32)(&CHK_STRx), 0},
 {SECT_STRx, (u32)(&CHK_STRx), 0},
 {SECT_SPRP, 0x004CAF40, 1},
 {SECT_FORC, 0x004CAEE0, 1},
@@ -40,13 +44,13 @@ chk_sect general[] = {
 
 // Non-Remaster Briefings
 chk_sect briefing[] = {
-{SECT_STR , 0x004CC650, 1},
+{SECT_STR , (u32)(&CHK_STRx), 1},
 {SECT_MBRF, 0x004CC1F0, 1}};
 
 
 // SC 1.00 or 1.04 Melee
 chk_sect melee_sc[] = {
-{SECT_STR , 0x004CC650, 1},
+{SECT_STR , (u32)(&CHK_STRx), 1},
 {SECT_MTXM, 0x004CD0B0, 1},
 {SECT_THG2, 0x004CD600, 1},
 {SECT_UNIT, 0x004CD7A0, 1},
@@ -56,7 +60,7 @@ chk_sect melee_sc[] = {
 
 // SC 1.00 UMS
 chk_sect ums_van[] = {
-{SECT_STR , 0x004CC650, 1},
+{SECT_STR , (u32)(&CHK_STRx), 1},
 {SECT_MTXM, 0x004CD0B0, 1},
 {SECT_THG2, 0x004CD600, 1},
 {SECT_MASK, 0x004CAF90, 1},
@@ -81,7 +85,7 @@ chk_sect ums_van[] = {
 
 // SC 1.04 UMS
 chk_sect ums_hyb[] = {
-{SECT_STR , 0x004CC650, 1},
+{SECT_STR , (u32)(&CHK_STRx), 1},
 {SECT_MTXM, 0x004CD0B0, 1},
 {SECT_THG2, 0x004CD600, 1},
 {SECT_MASK, 0x004CAF90, 1},
@@ -106,7 +110,7 @@ chk_sect ums_hyb[] = {
 
 // BW Melee
 chk_sect melee_bw[] = {
-{SECT_STR , 0x004CC650, 1},
+{SECT_STR , (u32)(&CHK_STRx), 1},
 {SECT_MTXM, 0x004CD0B0, 1},
 {SECT_THG2, 0x004CD600, 1},
 {SECT_UNIT, 0x004CD7A0, 1},
@@ -116,7 +120,7 @@ chk_sect melee_bw[] = {
 
 // BW UMS
 chk_sect ums_bw[] = {
-{SECT_STR , 0x004CC650, 1},
+{SECT_STR , (u32)(&CHK_STRx), 1},
 {SECT_MTXM, 0x004CD0B0, 1},
 {SECT_THG2, 0x004CD600, 1},
 {SECT_MASK, 0x004CAF90, 1},
@@ -136,14 +140,14 @@ chk_sect ums_bw[] = {
 
 // Remaster Briefings
 chk_sect briefing_r[] = {
-{SECT_STR , 0x004CC650, 0},
+{SECT_STR , (u32)(&CHK_STRx), 0},
 {SECT_STRx, (u32)(&CHK_STRx), 0},
 {SECT_MBRF, 0x004CC1F0, 1}};
 
 
 // SC:R SCM Melee
 chk_sect melee_sc_r[] = {
-{SECT_STR , 0x004CC650, 0},
+{SECT_STR , (u32)(&CHK_STRx), 0},
 {SECT_STRx, (u32)(&CHK_STRx), 0},
 {SECT_MTXM, 0x004CD0B0, 1},
 {SECT_THG2, 0x004CD600, 1},
@@ -154,7 +158,7 @@ chk_sect melee_sc_r[] = {
 
 // SC:R SCM UMS
 chk_sect ums_hyb_r[] = {
-{SECT_STR , 0x004CC650, 0},
+{SECT_STR , (u32)(&CHK_STRx), 0},
 {SECT_STRx, (u32)(&CHK_STRx), 0},
 {SECT_MTXM, 0x004CD0B0, 1},
 {SECT_THG2, 0x004CD600, 1},
@@ -180,7 +184,7 @@ chk_sect ums_hyb_r[] = {
 
 // SC:R BW Melee
 chk_sect melee_bw_r[] = {
-{SECT_STR , 0x004CC650, 0},
+{SECT_STR , (u32)(&CHK_STRx), 0},
 {SECT_STRx, (u32)(&CHK_STRx), 0},
 {SECT_MTXM, 0x004CD0B0, 1},
 {SECT_THG2, 0x004CD600, 1},
@@ -191,7 +195,7 @@ chk_sect melee_bw_r[] = {
 
 // SC:R BW UMS
 chk_sect ums_bw_r[] = {
-{SECT_STR , 0x004CC650, 0},
+{SECT_STR , (u32)(&CHK_STRx), 0},
 {SECT_STRx, (u32)(&CHK_STRx), 0},
 {SECT_MTXM, 0x004CD0B0, 1},
 {SECT_THG2, 0x004CD600, 1},
@@ -323,6 +327,10 @@ u8** chkStrPtr    = (u8**)(0x005993D4);   // u8* chkStrPtr
 u32* chkStrSize   = (u32*)(0x005994D8);   // u32 chkStrSize
 u8** stat_txtPtr  = (u8**)(0x006D1238);   // u8* stat_txtPtr
 
+// Fixed STR address to match SC:R
+u8* eudStrBase = NULL;
+u32 eudStrSize = 0;
+
 u32* UnitsLost     = (u32*)(0x00581E74);  // u32 UnitsLost[12]
 u32* BuildingsLost = (u32*)(0x00581FC4);  // u32 BuildingsLost[12]
 u32* FactoriesLost = (u32*)(0x005820E4);  // u32 FactoriesLost[12]
@@ -330,7 +338,7 @@ u32* UnitDeaths    = (u32*)(0x0058A364);  // u32 UnitDeaths[228][12]
 u32* CurrentPlayer = (u32*)(0x006509B0);  // u32 CurrentPlayer
 
 // Pointers to functions using standard calling conventions (no assembly required)
-PlayerGroupIterator_Callback getDeaths = (PlayerGroupIterator_Callback)(0x00460380);
+//PlayerGroupIterator_Callback getDeaths = (PlayerGroupIterator_Callback)(0x00460380);
 PlayerGroupIterator GetAllPlayers      = (PlayerGroupIterator)(0x0045FC40);
 PlayerGroupIterator GetNeutralPlayers  = (PlayerGroupIterator)(0x0045FCA0);
 PlayerGroupIterator GetAllies          = (PlayerGroupIterator)(0x0045FD00);
@@ -339,7 +347,7 @@ PlayerGroupIterator GetNAVPlayers      = (PlayerGroupIterator)(0x0045FDD0);
 
 // Some CHK_STR related sc functions
 #define sc_AppAddExit "0x004F6100"
-#define sc_UnloadSTR  "0x004CB370"
+//#define sc_UnloadSTR  "0x004CB370"
 
 // Addresses of Deaths/Set Deaths
 #define CONDITIONS         0x00515A98 // Condition function pointer array
@@ -413,6 +421,7 @@ SFileSetFilePointer_type SFileSetFilePointer;
 
 
 __fastcall bool TRGCND_Deaths(condition* c);
+__fastcall u32 getDeaths(u32 player, u16 unit, u32 number);
 
 __fastcall bool TRGACT_SetDeaths(action* a);
 __fastcall u32 SetDeaths(u32 player, u16 unit, u32 number);
@@ -425,11 +434,15 @@ u32 GetForcePlayers(u32 player, u32 unit, u32 number, PlayerGroupIterator_Callba
 __fastcall void cleardata();
 void restoremem();
 __fastcall u32 getStr();
+__stdcall void* loadGameAlloc(int size, char* filename, int line, int idk);
+__stdcall void loadGameFree(void* ptr, char* filename, int line, int idk);
+void unloadSTR();
 
 void setPlayerColors(u32 count, u8* buffer);
 void genPCol(u8* dst, u8 r, u8 g, u8 b);
 u8 pcolLookup(u8 r, u8 g, u8 b);
 u16 randBW(u32 id);
+
 
 void __fastcall fixFrame();
 
@@ -460,6 +473,51 @@ __fastcall bool TRGCND_Deaths(condition* c){
   }
 }
 
+__fastcall u32 getDeaths(u32 player, u16 unit, u32 number){
+  u32 ptr;
+  switch(player){
+    case PLAYER_FOES:
+      return GetFoes(unit, 0, &getDeaths);
+    case PLAYER_ALLIES:
+      return GetAllies(unit, 0, &getDeaths);
+    case PLAYER_NEUTRAL_PLAYERS:
+      return GetNeutralPlayers(unit, 0, &getDeaths);
+    case PLAYER_ALL_PLAYERS:
+      return GetAllPlayers(unit, 0, &getDeaths);
+    case PLAYER_FORCE_1:
+    case PLAYER_FORCE_2:
+    case PLAYER_FORCE_3:
+    case PLAYER_FORCE_4:
+      return GetForcePlayers(player, unit, 0, &getDeaths);
+    case PLAYER_UNUSED_1:
+    case PLAYER_UNUSED_2:
+    case PLAYER_UNUSED_3:
+    case PLAYER_UNUSED_4:
+      return 0;
+    case PLAYER_NON_ALLIED_VIC:
+      return GetNAVPlayers(unit, 0, &getDeaths);
+    
+    case PLAYER_CURRENT_PLAYER:
+      player = *CurrentPlayer;
+    default:
+      break;
+  }
+  switch(unit){
+    case UNIT_ANY_UNIT:
+      return BuildingsLost[player] + UnitsLost[player];
+    case UNIT_MEN:
+      return UnitsLost[player];
+    case UNIT_BUILDINGS:
+      return BuildingsLost[player];
+    case UNIT_FACTORIES:
+      return FactoriesLost[player];
+    default:
+      ptr = (u32)UnitDeaths + player*4 + unit*48;
+      if(ptr == 0) return 0; // null pointer
+      return UnitDeaths[player + unit*12];
+  }
+}
+
 
 __fastcall bool TRGACT_SetDeaths(action* a){
   eudmask = 0xFFFFFFFF; // reset mask
@@ -483,6 +541,7 @@ __fastcall bool TRGACT_SetDeaths(action* a){
 }
 
 __fastcall u32 SetDeaths(u32 player, u16 unit, u32 number){
+  u32 ptr;
   switch(player){
     case PLAYER_NON_ALLIED_VIC:
       return GetNAVPlayers(unit, number, &SetDeaths);
@@ -529,7 +588,8 @@ __fastcall u32 SetDeaths(u32 player, u16 unit, u32 number){
       return 0;
     default:
       //if(unit >= 228) return false; // :)
-      if((u32)UnitDeaths + player*4 + unit*48 == 0) return 0;
+      ptr = (u32)UnitDeaths + player*4 + unit*48;
+      if(ptr == 0) return 0; // null pointer
       UnitDeaths[player + unit*12] &= ~eudmask;
       UnitDeaths[player + unit*12] |= number & eudmask;
   }
@@ -537,7 +597,7 @@ __fastcall u32 SetDeaths(u32 player, u16 unit, u32 number){
 }
 
 __fastcall u32 AddDeaths(u32 player, u16 unit, u32 number){
-  u32 val;
+  u32 ptr,val;
   switch(player){
     case PLAYER_NON_ALLIED_VIC:
       return GetNAVPlayers(unit, number, &AddDeaths);
@@ -590,7 +650,8 @@ __fastcall u32 AddDeaths(u32 player, u16 unit, u32 number){
       return 0;
     default:
       //if(unit >= 228) return false; // :)
-      if((u32)UnitDeaths + player*4 + unit*48 == 0) return 0;
+      ptr = (u32)UnitDeaths + player*4 + unit*48;
+      if(ptr == 0) return 0; // null pointer
       val = UnitDeaths[player + unit*12] & eudmask;
       UnitDeaths[player + unit*12] &= ~eudmask;
       number &= eudmask;
@@ -600,7 +661,7 @@ __fastcall u32 AddDeaths(u32 player, u16 unit, u32 number){
 }
 
 __fastcall u32 SubtractDeaths(u32 player, u16 unit, u32 number){
-  u32 val;
+  u32 ptr,val;
   switch(player){
     case PLAYER_NON_ALLIED_VIC:
       return GetNAVPlayers(unit, number, &SubtractDeaths);
@@ -659,7 +720,8 @@ __fastcall u32 SubtractDeaths(u32 player, u16 unit, u32 number){
       return 0;
     default:
       //if(unit >= 228) return false; // :)
-      if((u32)UnitDeaths + player*4 + unit*48 == 0) return 0;
+      ptr = (u32)UnitDeaths + player*4 + unit*48;
+      if(ptr == 0) return 0; // null pointer
       val = UnitDeaths[player + unit*12] & eudmask;
       UnitDeaths[player + unit*12] &= ~eudmask;
       number &= eudmask;
@@ -693,23 +755,33 @@ u32 __attribute__ ((noinline)) GetForcePlayers(u32 player, u32 unit, u32 number,
 /* ---- CHK Loading Functions ---- */
 
 __stdcall u32 CHK_STRx(chk_call_data* thing, u32 size, u32 idk){
-  if(*chkStrPtr != NULL) SMemFree(*chkStrPtr, PLUGIN_NAME, __LINE__, 0);
-  *chkStrPtr = (u8*)SMemAlloc(size, PLUGIN_NAME, __LINE__, 0);
-  if(*chkStrPtr == NULL) return 0;
+  if(eudStrBase != NULL){
+    *chkStrPtr = (u8*)VirtualAlloc((void*)EUD_STR_PTR, size, MEM_COMMIT, PAGE_READWRITE);
+    if(*chkStrPtr == NULL) return 0;
+    *chkStrPtr = (u8*)EUD_STR_PTR;
+    eudStrSize = size;
+  }else{
+    if(*chkStrPtr != NULL) SMemFree(*chkStrPtr, PLUGIN_NAME, __LINE__, 0);
+    *chkStrPtr = (u8*)SMemAlloc(size, PLUGIN_NAME, __LINE__, 0);
+    if(*chkStrPtr == NULL) return 0;
+  }
+  *chkStrSize = size;
   
   // the easiest way I could think of to call this function
   __asm __volatile("\n"
-"    mov ebx,"sc_UnloadSTR"\n"  // handle to UnloadSTR function
+//"    mov ebx,"sc_UnloadSTR"\n"  // handle to UnloadSTR function
 "    mov edx,"sc_AppAddExit"\n"
-"    call edx\n" // AppAddExit(&UnloadStr)
+"    call edx\n" // AppAddExit(&unloadStr)
  : /*no outputs*/
- : /*no inputs*/
- : "eax","ecx","edx","ebx" // clobbers everything
+ : "b"(&unloadSTR) // ebx = &unloadSTR
+ : "eax","ecx","edx" // clobbers everything
 );
   
   if((u32)thing->data + thing->size > thing->end) return 0;
   memcpy(*chkStrPtr, thing->data, thing->size);
-  hasstrx = 1;
+  
+  // 1 if 'STRx', 0 if 'STR '
+  hasstrx = (thing->name[3] == 'x');
   return 1;
 }
 
@@ -747,20 +819,15 @@ __stdcall u32 CHK_CRGB(chk_call_data* thing, u32 size, u32 idk){
 
 // Clears whether or not SC:R sections should be used -- this is called whenever a CHK is being parsed
 __fastcall void cleardata(){
-  // these tend to get broken by the compiler or muck up the registers, so instead set them manually in the asm
-  //hascrgb = 0;
-  //hascolr = 0;
-  //hasstrx = 0;
+  hascrgb = 0;
+  hascolr = 0;
+  hasstrx = 0;
   oggCacheClear();
   restoremem();
-  __asm __volatile("\n"
-"    xor edx,edx\n"
-"    mov DWORD PTR _hascrgb, edx\n"
-"    mov DWORD PTR _hascolr, edx\n"
-"    mov DWORD PTR _hasstrx, edx\n"
+  __asm __volatile(""
  : /*no outputs*/
  : "a"(&mapchunks[MAP_VER_COUNT]) // mov eax, &mapchunks[MAP_VER_COUNT] ; eax points to the first byte past the end of the table
- : "edx"
+ : /*no clobbers*/
 );
 }
 
@@ -803,6 +870,39 @@ __fastcall u32 getStr(){
   
   __asm __volatile("" : : "d"(*chkStrPtr)); // set EDX to *chkStrPtr for the single case where it's needed
   return out;
+}
+
+
+// Replaces a call to SMemAlloc
+__stdcall void* loadGameAlloc(int size, char* filename, int line, int idk){
+  void* ptr;
+  if(eudStrBase != NULL){
+    ptr = VirtualAlloc((void*)EUD_STR_PTR, size, MEM_COMMIT, PAGE_READWRITE);
+  }else{
+    ptr = SMemAlloc(size, filename, line, idk);
+  }
+  return ptr;
+}
+// Replaces calls to SMemFree
+__stdcall void loadGameFree(void* ptr, char* filename, int line, int idk){
+  if(eudStrBase != NULL){
+    // idk
+  }else{
+    if(ptr != NULL) SMemFree(ptr, filename, line, idk);
+  }
+}
+
+
+// Called on exit
+void unloadSTR(){
+  if(eudStrBase != NULL){
+    VirtualFree(eudStrBase, 0, MEM_RELEASE);
+    eudStrBase = NULL;
+  }else{
+    if(*chkStrPtr != NULL) SMemFree(*chkStrPtr, PLUGIN_NAME, __LINE__, 0);
+  }
+  *chkStrPtr = NULL;
+  return;
 }
 
 
@@ -959,7 +1059,6 @@ u16 randBW(u32 id){
 }
 
 
-
 /* ---- Misc Patches ---- */
 
 // Prevents drawing invalid GRP frames -- modified from isdbg
@@ -1017,6 +1116,8 @@ u32 patch(){
   if(0x00497D5E > max) max = 0x00497D5E;
   if(0x004BC518 < min) min = 0x004BC518;
   if(0x004BC51D > max) max = 0x004BC51D;
+  if(0x004D00EE < min) min = 0x004D00EE;
+  if(0x004EEB76 > max) max = 0x004EEB76;
   
   if(min > max){
    return true;
@@ -1062,6 +1163,15 @@ u32 patch(){
   offs[0] = 0x8B;
   offs[1] = 0xF0; // MOV ESI,EAX
   
+  // Changes some calls to SMemFree and SMemAlloc relating to the STR buffer
+  addr = (u32*)(0x004D00EE +1);
+  *addr = (u32)(&loadGameFree) - 0x004D00F3;
+  addr = (u32*)(0x004D0105 +1);
+  *addr = (u32)(&loadGameAlloc) - 0x004D010A;
+  addr = (u32*)(0x004D0295 +1);
+  *addr = (u32)(&loadGameFree) - 0x004D029A;
+  addr = (u32*)(0x004EEB76 +1);
+  *addr = (u32)(&loadGameFree) - 0x004EEB7B;
   
   
   // Invalid grp frame fix -- CImage__updateGraphicData
@@ -1110,6 +1220,11 @@ u32 patch(){
   SFileOpenFileEx = (SFileOpenFileEx_type)GetProcAddress(hStorm, (LPSTR)268);
   SFileReadFile = (SFileReadFile_type)GetProcAddress(hStorm, (LPSTR)269);
   SFileSetFilePointer = (SFileSetFilePointer_type)GetProcAddress(hStorm, (LPSTR)271);
+  
+  // Reserve STR memory
+  eudStrBase = (u8*)VirtualAlloc((void*)EUD_STR_PTR, EUD_STR_MAX_SIZE, MEM_RESERVE, PAGE_NOACCESS);
+  eudStrSize = 0;
+  // what to do if it fails?
   
   // Hopefully everything.
   return true;

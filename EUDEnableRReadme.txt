@@ -22,6 +22,8 @@ EUDEnableR.qdp - MPQDraft plugin
 BASIC INSTRUCTIONS:
 Include the plugin with your favorite launcher and enjoy.
 
+For SC:R maps to work properly a mod with the SC:R tilesets may be needed.
+
 
 SPECIAL THANKS TO:
 Heinermann for BWAPI and helping with random questions
@@ -29,6 +31,7 @@ Mini Moose 2707 for testing
 
 
 VERSIONS:
+3.0.2 - Changed STR buffer to be at the fixed SC:Remastered address for better EUD support.
 3.0.1 - Reworked the code and added support for SC:Remastered map versions and EUD masking.
 
 2.2.0 - Released MPQDraft and ChaosLauncher builds.
