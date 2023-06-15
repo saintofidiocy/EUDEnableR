@@ -1,4 +1,4 @@
-EUDEnable v3.0
+EUDEnable v3.1
 REMASTERED
 Made by O)FaRTy1billion
 https://github.com/saintofidiocy/EUDEnableR
@@ -31,6 +31,7 @@ Mini Moose 2707 for testing
 
 
 VERSIONS:
+3.1.1 - Fixed CRGB parsing, as it does not read COLR as previously understood.
 3.0.2 - Changed STR buffer to be at the fixed SC:Remastered address for better EUD support.
 3.0.1 - Reworked the code and added support for SC:Remastered map versions and EUD masking.
 

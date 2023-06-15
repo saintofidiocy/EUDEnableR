@@ -135,8 +135,6 @@ typedef struct {
 } chk_ver;
 
 
-
-
 // CRGB struct
 typedef struct {
   u8 rgb[8][3];
@@ -235,6 +233,7 @@ typedef u32 (WINAPI *SFileCloseFile_type)(HANDLE hFile); // 253
 typedef u32 (WINAPI *SFileOpenFileEx_type)(HANDLE hArchive, char *filename, int scope, HANDLE * hFile); // 268
 typedef u32 (WINAPI *SFileReadFile_type)(HANDLE hFile, void *buffer, int toRead, int *read, int overlapped); // 269
 typedef u32 (WINAPI *SFileSetFilePointer_type)(HANDLE hFile, int filePos, int *filePosHigh, int method); // 271
+typedef u32 (WINAPI *SBmpLoadImage_type)(char* filename, u8* paletteentries, u8* bitmapbits, u32 buffersize, int *width, int *height, int *bitdepth); // 323
 
 extern SMemAlloc_type SMemAlloc;
 extern SMemFree_type SMemFree;
@@ -242,6 +241,7 @@ extern SFileCloseFile_type SFileCloseFile;
 extern SFileOpenFileEx_type SFileOpenFileEx;
 extern SFileReadFile_type SFileReadFile;
 extern SFileSetFilePointer_type SFileSetFilePointer;
+extern SBmpLoadImage_type SBmpLoadImage;
 
 #ifdef __cplusplus
 extern "C" { // so that it's linkable from bwl.c
