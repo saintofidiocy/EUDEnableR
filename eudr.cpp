@@ -442,7 +442,7 @@ __fastcall bool TRGCND_Deaths(condition* c){
   
   if(c->maskFlag == EUD_MASK_FLAG){
     deaths &= c->location;
-    num &= c->location;
+    // num &= c->location;  // This line should be removed
   }
   
   switch(c->modifier){
